@@ -1,4 +1,4 @@
-package org.example.models;
+package org.example.models.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,22 +8,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "empresa")
+@Table(name = "EMPRESA")
 @Getter
 @Setter
-public class DataBaseEnterprise {
+public class Enterprise {
 
-    @Column(name = "nome_da_empresa")
+    @Column(name = "NOME_DA_EMPRESA")
     private String name;
 
     @Id
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "cnpj")
+    @Column(name = "CNPJ")
     private String cnpj;
 
-    @Column(name = "telefone")
+    @Column(name = "TELEFONE")
     private String phoneNumber;
 
     @Column(name = "email")
