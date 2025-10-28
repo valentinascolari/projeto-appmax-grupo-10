@@ -8,22 +8,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Empresa")
+@Table(name = "empresa")
 @Getter
 @Setter
 public class DataBaseEnterprise {
 
-    @Column(name = "nome da empresa")
+    @Column(name = "nome_da_empresa")
     private String name;
 
     @Id
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "CNPJ")
+    @Column(name = "cnpj")
     private String cnpj;
 
-    @Column(name = "Telefone")
+    @Column(name = "telefone")
     private String phoneNumber;
 
     @Column(name = "email")
