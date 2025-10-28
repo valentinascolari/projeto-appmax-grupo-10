@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "pedidos_clientes")
+@Table(name = "PEDIDOS_CLIENTES")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,36 +24,36 @@ public class Customers {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "id_pedido", unique = true, nullable = false)
-    private String idPedido;
+    @Column(name = "ID_PEDIDO", unique = true, nullable = false)
+    private String idOrder;
 
-    @Column(name = "nome_cliente", nullable = false)
-    private String nomeCliente;
+    @Column(name = "NOME_CLIENTE", nullable = false)
+    private String nameCustomers;
 
-    @Column(name = "cpf", length = 11, nullable = false)
+    @Column(name = "CPF", length = 11, nullable = false)
     private String cpf;
 
-    @Column(name = "status_compra", nullable = false)
-    private String statusCompra;
+    @Column(name = "STATUS_COMPRA", nullable = false)
+    private String purchaseStatus;
 
-    @Column(name = "id_empresa", nullable = false)
-    private Long idEmpresa;
+    @Column(name = "ID_EMPRESA", nullable = false)
+    private Long idEnterprise;
 
-    @Column(name = "valor_compra", precision = 10, scale = 2, nullable = false)
-    private BigDecimal valorCompra;
+    @Column(name = "VALOR_COMPRA", precision = 10, scale = 2, nullable = false)
+    private BigDecimal purchaseValue;
 
-    @Column(name = "site_compra")
-    private String siteDaCompra;
+    @Column(name = "SITE_COMPRA")
+    private String purchaseWebsite;
 
-    @Column(name = "codigo_rastreio", unique = true, nullable = false)
-    private String codigoRastreio;
+    @Column(name = "CODIGO_RASTREIO", unique = true, nullable = false)
+    private String trackingCode;
 
-    @Column(name = "telefone")
-    private String telefone;
+    @Column(name = "TELEFONE")
+    private String telephone;
 
-    @Column(name = "email")
+    @Column(name = "EMAIL")
     private String email;
 
-    @Column(name = "forma_pagamento", nullable = false)
-    private String formaPagamento;
+    @Column(name = "FORMA_PAGAMENTO", nullable = false)
+    private String paymentMethod;
 }
