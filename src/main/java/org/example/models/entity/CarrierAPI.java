@@ -11,34 +11,34 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "transportadora")
+@Table(name = "TRANSPORTADORA")
 @Data
 @NoArgsConstructor
-public class DataBaseCarrierAPI {
+public class CarrierAPI {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "nome_cliente", nullable = false)
-    private String nomeCliente;
+    @Column(name = "NOME_CLIENTE", nullable = false)
+    private String nameCustomer;
 
-    @Column(name = "cpf", unique = true, length = 11)
+    @Column(name = "CPF", unique = true, length = 11)
     private String cpf;
 
-    @Column(name = "status_pedido")
-    private String statusPedido;
+    @Column(name = "STATUS_PEDIDO")
+    private String orderStatus;
 
-    @Column(name = "codigo_rastreio", unique = true)
-    private String codigoRastreio;
+    @Column(name = "CODIGO_RASTREIO", unique = true)
+    private String trackingCode;
 
-    @Column(name = "endereco")
-    private String endereco;
+    @Column(name = "ENDERECO")
+    private String adress;
 
     @Column(name = "email")
     private String email;
 
-    @Column(name = "telefone")
-    private String telefone;
+    @Column(name = "TELEFONE")
+    private String telephone;
 }
