@@ -1,6 +1,6 @@
 package org.example.enumerator;
 
-public enum PaymentMethod {
+public enum PaymentMethodEnum {
     DEBIT,
     CREDIT,
     PIX;

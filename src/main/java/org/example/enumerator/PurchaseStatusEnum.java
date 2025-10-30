@@ -1,6 +1,6 @@
 package org.example.enumerator;
 
-public enum PurchaseStatus {
+public enum PurchaseStatusEnum {
     PREPARING,
     IN_TRAFFIC,
     FINISH;
