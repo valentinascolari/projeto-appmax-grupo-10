@@ -15,10 +15,10 @@ public class Enterprises {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //criar um valor de ID
     private Long id;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name = "CNPJ")
+    @Column(name = "CNPJ", length = 14, nullable = false)
     private String cnpj;
 
     @Column(name = "TELEPHONE")
