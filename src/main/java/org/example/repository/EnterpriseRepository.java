@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface EnterpriseRepository extends JpaRepository<Enterprises, Long> {
 
     Enterprises findByCnpj(String cnpj);
+
+    Enterprises findById(Integer id);
+
 }

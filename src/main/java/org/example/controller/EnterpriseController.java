@@ -19,6 +19,12 @@ public class EnterpriseController {
     @Autowired
     private EnterpriseService enterpriseService;
 
+    @PostMapping //salvando a empresa
+    public ResponseEntity<Enterprises> create(@RequestBody Enterprises enterprises) {
+        Enterprises newEnterprises = enterpriseService.create(enterprises);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newEnterprises);
+    }
+
     @GetMapping
     public ResponseEntity<List<Enterprises>> getAll() {
         List<Enterprises> customersList = enterpriseService.getAll();
@@ -33,10 +39,10 @@ public class EnterpriseController {
         return ResponseEntity.ok(enterprise);
     }
 
-    @PostMapping //salvando a empresa
-    public ResponseEntity<Enterprises> create(@RequestBody Enterprises enterprises) {
-        Enterprises newEnterprises = enterpriseService.create(enterprises);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newEnterprises);
+    @PutMapping("/{id}")
+    public ResponseEntity<Enterprises> updateById(@PathVariable Integer id, @RequestBody Enterprises enterprise){
+        Enterprises updatedEnterprise = enterpriseService.updateById(id, enterprise);
+        return ResponseEntity.ok(updatedEnterprise);
     }
 
     @DeleteMapping("/{id}")
