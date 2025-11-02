@@ -1,11 +1,16 @@
 package org.example.service;
 
+import jakarta.transaction.Transactional;
+import org.example.dto.EnterprisesDTO;
 import org.example.entity.Enterprises;
+import org.example.mapper.EnterprisesDTOMapper;
+import org.example.mapper.EnterprisesMapper;
 import org.example.repository.EnterpriseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EnterpriseService {
@@ -13,30 +18,43 @@ public class EnterpriseService {
     @Autowired
     private EnterpriseRepository enterpriseRepository;
 
-    public Enterprises create(Enterprises enterprise) {
-        return enterpriseRepository.save(enterprise);
+    @Transactional
+    public EnterprisesDTO create(EnterprisesDTO enterprisesDTO) {
+        Enterprises enterprises = EnterprisesMapper.map(enterprisesDTO);
+
+        Enterprises enterprises1 = enterpriseRepository.save(enterprises);
+
+        return EnterprisesDTOMapper.map(enterprises1);
     }
 
-    public List<Enterprises> getAll(){
-        return enterpriseRepository.findAll();
+    public List<EnterprisesDTO> getAll() {
+        return enterpriseRepository
+                .findAll()
+                .stream()
+                .map(EnterprisesDTOMapper::map)
+                .collect(Collectors.toList());
     }
 
-    public Enterprises getByCnpj(String cnpj){
-        return enterpriseRepository.findByCnpj(cnpj);
+    public EnterprisesDTO getByCnpj(String cnpj) {
+        Enterprises enterprises = enterpriseRepository.findByCnpj(cnpj);
+
+        return EnterprisesDTOMapper.map(enterprises);
     }
 
-    public Enterprises updateById(Integer id, Enterprises updatedEnterprise) {
+    public EnterprisesDTO updateById(Integer id, EnterprisesDTO updatedEnterprise) {
         Enterprises existing = enterpriseRepository.findById(id);
 
         if (updatedEnterprise.getName() != null) {
             existing.setName(updatedEnterprise.getName());
         }
 
-        if(updatedEnterprise.getEmail() != null) {
+        if (updatedEnterprise.getEmail() != null) {
             existing.setEmail(updatedEnterprise.getEmail());
         }
 
-        return enterpriseRepository.save(existing);
+        Enterprises enterprises = enterpriseRepository.save(existing);
+
+        return EnterprisesDTOMapper.map(enterprises);
     }
 
     public void deleteById(Long id) {

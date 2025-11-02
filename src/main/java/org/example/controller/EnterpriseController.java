@@ -1,8 +1,6 @@
 package org.example.controller;
 
-import org.example.entity.Customers;
-import org.example.entity.Enterprises;
-import org.example.service.CustomerService;
+import org.example.dto.EnterprisesDTO;
 import org.example.service.EnterpriseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,28 +18,29 @@ public class EnterpriseController {
     private EnterpriseService enterpriseService;
 
     @PostMapping //salvando a empresa
-    public ResponseEntity<Enterprises> create(@RequestBody Enterprises enterprises) {
-        Enterprises newEnterprises = enterpriseService.create(enterprises);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newEnterprises);
+    public ResponseEntity<EnterprisesDTO> create(@RequestBody EnterprisesDTO enterprisesDTO) {
+        EnterprisesDTO newEnterprisesDTO = enterpriseService.create(enterprisesDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newEnterprisesDTO);
     }
 
     @GetMapping
-    public ResponseEntity<List<Enterprises>> getAll() {
-        List<Enterprises> customersList = enterpriseService.getAll();
+    public ResponseEntity<List<EnterprisesDTO>> getAll() {
+        List<EnterprisesDTO> customersList = enterpriseService.getAll();
 
         return ResponseEntity.ok(customersList);
     }
 
     @GetMapping("/{cnpj}")
-    public ResponseEntity<Enterprises> getByCpf(@PathVariable String cnpj) {
-        Enterprises enterprise = enterpriseService.getByCnpj(cnpj);
+    public ResponseEntity<EnterprisesDTO> getByCpf(@PathVariable String cnpj) {
+        EnterprisesDTO enterprisesDTO = enterpriseService.getByCnpj(cnpj);
 
-        return ResponseEntity.ok(enterprise);
+        return ResponseEntity.ok(enterprisesDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Enterprises> updateById(@PathVariable Integer id, @RequestBody Enterprises enterprise){
-        Enterprises updatedEnterprise = enterpriseService.updateById(id, enterprise);
+    public ResponseEntity<EnterprisesDTO> updateById(@PathVariable Integer id, @RequestBody EnterprisesDTO enterprisesDTO) {
+        EnterprisesDTO updatedEnterprise = enterpriseService.updateById(id, enterprisesDTO);
+
         return ResponseEntity.ok(updatedEnterprise);
     }
 
@@ -51,4 +50,5 @@ public class EnterpriseController {
 
         return ResponseEntity.noContent().build();
     }
+
 }
