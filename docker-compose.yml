@@ -1,0 +1,11 @@
+services:
+  db:
+    image: postgres:16-bookworm
+    container_name: my-postgres-db
+    restart: always
+    environment:
+      POSTGRES_DB: database
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: eld2025
+    ports:
+      - "5432:5432"
