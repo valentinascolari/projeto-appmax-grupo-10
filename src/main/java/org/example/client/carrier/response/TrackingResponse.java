@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Tracking {
+public class TrackingResponse {
 
     private List<String> trackingCode;
 

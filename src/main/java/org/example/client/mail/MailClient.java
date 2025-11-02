@@ -1,6 +1,6 @@
 package org.example.client.mail;
 
-import org.example.client.mail.response.Location;
+import org.example.client.mail.response.LocationResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface MailClient {
 
     @GetMapping("/orders/{code}")
-    Location askLocationCode(@PathVariable("code") String code);
+    LocationResponse askLocationCode(@PathVariable("code") String code);
 
 }

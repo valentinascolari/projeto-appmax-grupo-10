@@ -5,8 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
+@Data // toString, getter e setter,
+@NoArgsConstructor 
 @AllArgsConstructor
 @Builder
 public class CustomerDTO {
@@ -16,5 +16,4 @@ public class CustomerDTO {
     private String cpf;
     private String telephone;
     private String email;
-
 }
