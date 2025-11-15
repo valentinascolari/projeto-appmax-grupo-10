@@ -32,6 +32,9 @@ public class TrackingService {
     @Autowired
     private MailClient mailClient;
 
+    @Autowired
+    private WhatsappService whatsappService;
+
     @Scheduled(fixedRate = 100000) // cronograma p fazer a requisição a cada N milissegundos
     public void consultarCodigoRatreio() {
         // 1- pega os pedidos e cria uma lista
