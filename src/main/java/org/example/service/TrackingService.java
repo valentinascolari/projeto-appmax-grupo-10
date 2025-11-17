@@ -2,9 +2,9 @@ package org.example.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.client.carrier.CarrierClient;
-import org.example.client.carrier.response.TrackingResponse;
 import org.example.client.mail.MailClient;
-import org.example.client.mail.response.LocationResponse;
+import org.example.client.whatsapp.WhatsappClient;
+import org.example.client.whatsapp.WhatsappRequest;
 import org.example.entity.Customers;
 import org.example.entity.Orders;
 import org.example.repository.CustomerRepository;
@@ -33,42 +33,54 @@ public class TrackingService {
     private MailClient mailClient;
 
     @Autowired
-    private WhatsappService whatsappService;
+    private WhatsappClient whatsappClient;
 
-    @Scheduled(fixedRate = 100000) // cronograma p fazer a requisição a cada N milissegundos
+    // Deixei em 60 segundos para o teste rápido
+    @Scheduled(fixedRate = 60000)
     public void consultarCodigoRatreio() {
         // 1- pega os pedidos e cria uma lista
         List<Orders> ordersList = ordersRepository.findAll(); //busca todas as orders do banco e coloca numa lista
 
         // para cada pedido:
-        // 1 - pega o id do cliente
-        // 2 - se existir pega o cliente
-        // 3 - depois de pegar o cliente, pega o cpf do cliente
-
-        for (Orders order : ordersList) // for each
-        {
+        for (Orders order : ordersList) {
             Long idCustomer = order.getIdCustomer();
 
+            Optional<Customers> customerOpt = customerRepository.findById(idCustomer);
 
-            //já estava na biblioteca CrudRepository
-            Optional<Customers> customer = customerRepository.findById(idCustomer); // generics Obj<Classe>var
-            if (customer.isPresent()) {
-                Customers customers = customer.get();
+            if (customerOpt.isPresent()) {
+                Customers customers = customerOpt.get();
+                String telephone = customers.getTelephone();
                 String cpf = customers.getCpf();
 
-                // 1- Passar o cpf para transportadora e retornar o codigo de rastreio
-                TrackingResponse trackingResponse = carrierClient.askCodeCpfCustomer(cpf);
-                List<String> codeList = trackingResponse.getTrackingCode();
+                // Usar quando disponibilizarem a API da transportadora
+                // TrackingResponse trackingResponse = carrierClient.askCodeCpfCustomer(cpf);
 
-                for (String code : codeList) { //para cada codigo, ele esta indo no codeList da transportadora -57
+                // Vamos fingir que ele nos deu um código de rastreio:
+                List<String> statusList = List.of(
+                        "Compra confirmada, seu código de rastreio é: " + order.getTrackingCode(),
+                        "Enviando",
+                        "Entregue");
 
-                    // 2 - Passar o codigo de rastreio para os correios e retornar a última posição
-                    LocationResponse locationResponse = mailClient.askLocationCode(code);
-                    String city = locationResponse.getCity();
+                if (statusList != null) {
 
-                    // 3 - Chamar o whatsapp
-                    String telefone = customer.get().getTelephone();
-                    log.info("Telefone: " + telefone + "Cidade: " + city);
+                    for (String status : statusList) {
+
+                        try {
+                            // Cria o objeto da requisição
+                            WhatsappRequest request = WhatsappRequest.builder()
+                                    .number(telephone)
+                                    .text(status)
+                                    .build();
+
+                            // Envia a mensagem usando a API Key configurada no seu docker-compose (appmax123)
+                            whatsappClient.sendMessage("appmax123", request);
+
+                            log.info("Mensagem enviada com sucesso para: " + request.getNumber() + ", mensagem: " + request.getText());
+
+                        } catch (Exception e) {
+                            log.error("Falha ao enviar WhatsApp para " + e.getMessage());
+                        }
+                    }
                 }
             }
         }

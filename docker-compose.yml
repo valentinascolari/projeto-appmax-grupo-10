@@ -1,4 +1,53 @@
+version: '3.3'
+
 services:
+  evolution_api:
+    container_name: evolution_api
+    image: evoapicloud/evolution-api:v2.3.6
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - SERVER_URL=http://localhost:8080
+      - DOCKER_ENV=true
+      - AUTHENTICATION_API_KEY=appmax123
+      - AUTHENTICATION_EXPOSE_IN_FETCH_INSTANCES=true
+      
+      # --- Banco de Dados (Obrigatório na v2) ---
+      - DATABASE_PROVIDER=postgresql
+      - DATABASE_CONNECTION_URI=postgresql://postgres:appmax123@postgres:5432/evolution
+      - DATABASE_CLIENT_NAME=evolution_exchange
+      
+      # --- Redis (Cache) ---
+      - CACHE_REDIS_ENABLED=true
+      - CACHE_REDIS_URI=redis://redis:6379/0
+      
+      # --- Logs (Para vermos o QR Code no terminal se precisar) ---
+      - QRCODE_LIMIT=30
+      - LOG_LEVEL=ERROR,WARN,DEBUG,INFO
+
+    volumes:
+      - evolution_instances:/evolution/instances
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=appmax123
+      - POSTGRES_DB=evolution
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+
   db:
     image: postgres:16-bookworm
     container_name: my-postgres-db
@@ -9,3 +58,8 @@ services:
       POSTGRES_PASSWORD: eld2025
     ports:
       - "5432:5432"
+
+volumes:
+  evolution_instances:
+  postgres_data:
+  redis_data:
