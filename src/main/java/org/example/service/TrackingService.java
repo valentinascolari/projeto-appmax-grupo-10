@@ -57,9 +57,9 @@ public class TrackingService {
 
                 // Vamos fingir que ele nos deu um código de rastreio:
                 List<String> statusList = List.of(
-                        "Compra confirmada, seu código de rastreio é: " + order.getTrackingCode(),
-                        "Enviando",
-                        "Entregue");
+                        "Olá! Seu pedido de XXXXXXXX da loja XXXXX foi confirmado. Para acompanhar seu pedido, o código de rastreio é: " + order.getTrackingCode(),
+                        "Olá! Seu pedido de XXXXXXXX foi enviado.",
+                        "Olá! Seu pedido de XXXXXXXX foi entregue. Até a próxima!");
 
                 if (statusList != null) {
 
