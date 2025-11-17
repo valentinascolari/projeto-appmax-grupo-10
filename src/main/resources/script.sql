@@ -1,3 +1,7 @@
+UPDATE customers
+SET telephone = '555198106560' -- COLOQUE SEU NÚMERO AQUI (com 55 + DDD)
+WHERE id = 1; -- Isso vai atualizar o cliente 'João Silva'
+
 -- CUSTOMERS
 INSERT INTO CUSTOMERS (ID, CPF, EMAIL, NAME, TELEPHONE)
 VALUES (1, '12345678911', 'joao@gmail.com', 'João Silva', '51123456789');
@@ -36,3 +40,5 @@ INSERT INTO ORDERS (ID, ID_CUSTOMER, ID_ENTERPRISE, PAYMENT_METHOD, PURCHASE_STA
 VALUES (1, 1, 1, 'DEBIT',  'PREPARING', 258, 'www.apple.com', 'BR9L6E1R9T19');
 
 commit;
+
+
